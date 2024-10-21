@@ -2,12 +2,12 @@
 
 For development:
 
-$ cd .../arbitrage
+$ cd .../arbitrage<br/>
 $ elm reactor
 
 Then aim your browser at http://localhost:8000/site/index.html
 
 To build the Elm code into `site/elm.js`:
 
-$ cd .../arbitrage
+$ cd .../arbitrage<br/>
 $ ./bin/build
