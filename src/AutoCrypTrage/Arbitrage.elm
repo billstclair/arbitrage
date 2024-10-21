@@ -74,6 +74,7 @@ nextTrade stack =
 
 getToTrade : CoinID -> ToCoinDict -> Maybe (List Trade)
 getToTrade coinsid toCoinDict =
+    -- TODO
     Nothing
 
 
