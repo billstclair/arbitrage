@@ -1,4 +1,4 @@
-[Arbitrage](https://arbitrage.wrf) is an Automated Crypto Arbitrage trading system.
+[Arbitrage](https://arbitrage.wtf) is an Automated Crypto Arbitrage trading system.
 
 For development:
 
