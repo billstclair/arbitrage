@@ -10,9 +10,9 @@
 ----------------------------------------------------------------------
 
 
-module AutoCrypTrage.Arbitrage exposing (findArbitrage, nextTrade)
+module Arbitrage.Arbitrage exposing (findArbitrage, nextTrade)
 
-import AutoCrypTrage.Types
+import Arbitrage.Types
     exposing
         ( Amount
         , BuyOrSell(..)
