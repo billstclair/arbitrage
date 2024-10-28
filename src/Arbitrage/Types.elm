@@ -133,7 +133,7 @@ type alias ToCoinDict =
     Dict CoinID Price
 
 
-{-| Map the `fromCoin` field of a coin to a dictionary of prices for
+{-| Map the `fromCoin` field of a price to a dictionary of prices for
 trading that coin to another.
 -}
 type alias PriceDict =

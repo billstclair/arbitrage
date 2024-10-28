@@ -97,6 +97,10 @@ nextTrade stack =
 
 getToTrade : CoinID -> ToCoinDict -> ( Maybe Trade, ToCoinDict )
 getToTrade coinsid toCoinDict =
+    let
+        price =
+            firstValue toCoinDict
+    in
     -- TODO
     ( Nothing, toCoinDict )
 
