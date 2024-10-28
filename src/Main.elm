@@ -12,8 +12,8 @@
 
 module Main exposing (main)
 
-import AutoCrypTrage.Arbitrage as Arbitrage
-import AutoCrypTrage.Types exposing (Coin, Price, Trader)
+import Arbitrage.Arbitrage as Arbitrage
+import Arbitrage.Types exposing (Coin, Price, Trader)
 import Browser exposing (Document, UrlRequest(..))
 import Browser.Navigation as Navigation exposing (Key)
 import Char

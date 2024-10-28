@@ -1,7 +1,7 @@
 ---------------------------------------------------------------------
 --
 -- Types.elm
--- Shared types for AutoCrypTrage
+-- Shared types for Arbitrage
 -- Copyright (c) 2024 Bill St. Clair <billstclair@gmail.com>
 -- Some rights reserved.
 -- Distributed under the MIT License
@@ -10,7 +10,7 @@
 ----------------------------------------------------------------------
 
 
-module AutoCrypTrage.Types exposing
+module Arbitrage.Types exposing
     ( CoinID, TraderID
     , Quantity, Amount
     , Trader, Coin, Price, PriceDict, TraderPrices, TradeDict
