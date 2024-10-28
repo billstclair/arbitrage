@@ -32,6 +32,17 @@ import AutoCrypTrage.Types
         , WalletEntry
         )
 import Dict exposing (Dict)
+import Dict.Extra as DE
+
+
+firstValue : Dict comparable y -> Maybe y
+firstValue dict =
+    case DE.find (\_ _ -> True) dict of
+        Nothing ->
+            Nothing
+
+        Just ( k, v ) ->
+            Just v
 
 
 {-| Pull the next trade off of TradeStack.
@@ -40,19 +51,15 @@ The returned TradeStack has that Trade omitted.
 nextTrade : TradeStack -> ( Maybe Trade, TradeStack )
 nextTrade stack =
     let
-        traderPrices : List TraderPrices
-        traderPrices =
-            Dict.values stack.tradeDict
-
         coinid : CoinID
         coinid =
             stack.initialCoin.id
     in
-    case traderPrices of
-        [] ->
+    case firstValue stack.tradeDict of
+        Nothing ->
             ( Nothing, stack )
 
-        prices :: rest ->
+        Just prices ->
             case Dict.get coinid prices.prices of
                 Nothing ->
                     nextTrade
@@ -63,19 +70,35 @@ nextTrade stack =
 
                 Just toCoinDict ->
                     case getToTrade coinid toCoinDict of
-                        Nothing ->
-                            -- TODO
-                            ( Nothing, stack )
+                        ( Nothing, _ ) ->
+                            nextTrade
+                                { stack
+                                    | tradeDict =
+                                        Dict.remove prices.trader.id stack.tradeDict
+                                }
 
-                        Just trade ->
-                            -- TODO
-                            ( Nothing, stack )
+                        ( Just trade, toCoinDict2 ) ->
+                            let
+                                prices2 =
+                                    { prices
+                                        | prices =
+                                            Dict.insert coinid
+                                                toCoinDict2
+                                                prices.prices
+                                    }
+                            in
+                            ( Just trade
+                            , { stack
+                                | tradeDict =
+                                    Dict.insert prices.trader.id prices2 stack.tradeDict
+                              }
+                            )
 
 
-getToTrade : CoinID -> ToCoinDict -> Maybe (List Trade)
+getToTrade : CoinID -> ToCoinDict -> ( Maybe Trade, ToCoinDict )
 getToTrade coinsid toCoinDict =
     -- TODO
-    Nothing
+    ( Nothing, toCoinDict )
 
 
 {-| If the first return value is not `Nothing`, it will be pushed
