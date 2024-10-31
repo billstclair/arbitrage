@@ -1,0 +1,137 @@
+/* Enable scroll events on the <body>.
+ * https://stackoverflow.com/a/59005489/1386989
+ */
+:root {
+    overflow: hidden;
+}
+body {
+    overflow: hidden;
+}
+#body {
+    overflow: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+
+/* Used by accountDialog */
+.tall-dialog-title-height .mdl-dialog__title {
+    height: 100px;
+}
+.tall-dialog-title-height .mdl-dialog__content {
+    padding: 0px;
+    background: transparent;
+}
+
+.invisible {
+    display: none;
+}
+.content {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+/* These are from the Pleroma code at impeccable.com */
+.rt-active {
+    cursor:pointer;
+    animation-duration:.6s
+}
+
+.fav-active {
+    cursor:pointer;animation-duration:.6s
+}
+
+.fav-active:hover,.favorite-button.icon-star {
+    color:orange;
+    color:var(--cOrange,orange)
+}
+
+.icon-ellipsis.icon-clicked,.icon-ellipsis:hover {
+    color:#b9b9ba;
+    color:var(--text,#b9b9ba)
+}
+
+.icon-down-open.icon-clicked,.icon-down-open:hover {
+    color:#b9b9ba;
+    color:var(--text,#b9b9ba);
+    cursor:pointer;
+}
+
+.icon-retweet.retweeted,.rt-active:hover{
+    color:#0fa00f;
+    color:var(--cGreen,#0fa00f)
+}
+
+.button-icon.icon-reply.button-icon-active,.button-icon.icon-reply:not(.button-icon-disabled):hover{
+    color:#0095ff;
+    color:var(--cBlue,#0095ff);
+    cursor:pointer;
+}
+
+.status-actions {
+    width:100%;
+    display:flex;
+    margin-top:.75em
+}
+
+.status-actions {
+    width: 100%;
+    display: flex;
+    margin-top: .75em;
+}
+
+.status-actions div,.status-actions favorite-button {
+    max-width: 4em;
+    flex: 1;
+}
+
+.status-el .media-body {
+    flex: 1;
+    padding: 0;
+}
+
+.reply-to-and-account-name {
+    display: flex;
+}
+
+.reply-to-and-account-name .icon-reply {
+    transform: scaleX(-1);
+}
+
+/* No longer Pleroma */
+.scroll-pill-server { text-decoration: none; }
+.scroll-pill-server:link { color: black; }
+.scroll-pill-server:visited { color: black; }
+.scroll-pill-server:hover { color: gray; }
+.scroll-pill-server:active { color: gray; }
+
+.popup-choice-dark:hover { background-color: #55f; }
+.popup-choice-light:hover { background-color: #aaf; }
+
+p, div, textarea, button, table {
+    font-size : inherit;
+}
+
+body {
+    font-size: medium;
+}
+
+table.prettytable {
+  margin: 0em 0.5em 0.5em 0.5em;
+  background: whitesmoke;
+  border-collapse: collapse;
+}
+table.prettytable th, table.prettytable td {
+  border: 1px silver solid;
+  padding: 0.2em;
+}
+table.prettytable th {
+  background: gainsboro;
+  text-align: center;
+}
+table.prettytable tr:nth-child(even) td {
+  background: white;
+}
+table.prettytable caption {
+  margin-left: inherit;
+  margin-right: inherit;
