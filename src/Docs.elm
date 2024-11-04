@@ -24,6 +24,7 @@ import Html.Attributes as Attributes exposing (style)
 import Html.Events exposing (keyCode, on)
 import Json.Decode as JD exposing (Decoder, Value)
 import Json.Encode as JE
+import JsonTree exposing (TaggedValue(..))
 import Task
 import Url exposing (Url)
 
@@ -41,18 +42,22 @@ main =
 
 view : Model -> Document Msg
 view model =
-    { title = "AutoCrypTrage"
+    { title = "Ethereum JSON-RPC Docs"
     , body =
         [ h2 []
-            [ text "AutoCrypTrage" ]
+            [ text "Ethereum JSON-RPC Docs" ]
         , p []
-            [ text "Automaged Crypto Arbitrage trading." ]
+            [ text "View JSON-RPC Json, with interactive twist-downs." ]
+        , p []
+            [ JsonTree.view model.tree model.config model.state ]
         ]
     }
 
 
 type alias Model =
-    { traders : List Trader
+    { state : JsonTree.State
+    , tree : JsonTree.Node
+    , config : JsonTree.Config Msg
     }
 
 
@@ -67,7 +72,15 @@ init flags url key =
     let
         model : Model
         model =
-            { traders = []
+            { state = JsonTree.defaultState
+            , tree =
+                { value = TNull
+                , keyPath = ""
+                }
+            , config =
+                { onSelect = Nothing
+                , toMsg = \state -> Noop
+                }
             }
     in
     model |> withNoCmd
