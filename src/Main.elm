@@ -1,7 +1,7 @@
 --------------------------------------------------------------------
 --
 -- Main.elm
--- AuotoCrypTrage top-level
+-- Arbitrage top-level
 -- Copyright (c) 2024 Bill St. Clair <billstclair@gmail.com>
 -- Some rights reserved.
 -- Distributed under the MIT License
