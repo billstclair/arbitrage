@@ -19,9 +19,9 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, h2, p, text)
+import Html exposing (Attribute, Html, button, h2, p, text)
 import Html.Attributes as Attributes exposing (style)
-import Html.Events exposing (keyCode, on)
+import Html.Events exposing (keyCode, on, onClick)
 import Http
 import Json.Decode as JD exposing (Decoder, Value)
 import Json.Encode as JE
@@ -56,6 +56,13 @@ view model =
         , p []
             [ text "View JSON-RPC Json, with interactive twist-downs." ]
         , p []
+            [ button [ onClick ExpandAll ]
+                [ text "Expand All" ]
+            , text " "
+            , button [ onClick CollapseSome ]
+                [ text "Collapse Some" ]
+            ]
+        , p []
             [ JsonTree.view model.tree config model.state ]
         ]
     }
@@ -73,6 +80,8 @@ type Msg
     | HandleUrlChange Url
     | SetState JsonTree.State
     | GotJson (Result Http.Error String)
+    | ExpandAll
+    | CollapseSome
 
 
 jsonFile : String
@@ -85,11 +94,11 @@ init flags url key =
     let
         model : Model
         model =
-            { state = JsonTree.defaultState
-            , tree =
+            { tree =
                 { value = TNull
                 , keyPath = ""
                 }
+            , state = JsonTree.defaultState
             }
 
         cmd =
@@ -123,8 +132,22 @@ update msg model =
                                     { value = TList [ node ]
                                     , keyPath = ""
                                     }
+                                , state =
+                                    JsonTree.collapseToDepth 3 node model.state
                             }
                                 |> withNoCmd
+
+        ExpandAll ->
+            { model
+                | state = JsonTree.expandAll model.state
+            }
+                |> withNoCmd
+
+        CollapseSome ->
+            { model
+                | state = JsonTree.collapseToDepth 4 model.tree model.state
+            }
+                |> withNoCmd
 
         _ ->
             model |> withNoCmd
