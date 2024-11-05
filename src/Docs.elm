@@ -19,7 +19,7 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, a, button, h2, p, text)
+import Html exposing (Attribute, Html, a, button, div, h2, p, text)
 import Html.Attributes as Attributes exposing (href, style)
 import Html.Events exposing (keyCode, on, onClick)
 import Http
@@ -62,11 +62,15 @@ view model =
             , button [ onClick CollapseSome ]
                 [ text "Collapse Some" ]
             ]
-        , p []
-            [ JsonTree.view model.tree config model.state ]
-        , p []
-            [ a [ href "https://arbitrage.wtf/" ]
-                [ text "Arbitrage.wtf" ]
+        , div
+            [ style "overflow-y" "auto"
+            , style "height" "100%"
+            ]
+            [ JsonTree.view model.tree config model.state
+            , p []
+                [ a [ href "https://arbitrage.wtf/" ]
+                    [ text "Arbitrage.wtf" ]
+                ]
             ]
         ]
     }
