@@ -51,22 +51,23 @@ view model =
     in
     { title = "Ethereum JSON-RPC Docs"
     , body =
-        [ h2 []
-            [ text "Ethereum JSON-RPC Docs" ]
-        , p []
-            [ text "View JSON-RPC Json, with interactive twist-downs." ]
-        , p []
-            [ button [ onClick ExpandAll ]
-                [ text "Expand All" ]
-            , text " "
-            , button [ onClick CollapseSome ]
-                [ text "Collapse Some" ]
+        [ div
+            [ style "height" "100%"
+            , style "overflow-y" "auto"
             ]
-        , div
-            [ style "overflow-y" "auto"
-            , style "height" "100%"
-            ]
-            [ JsonTree.view model.tree config model.state
+            [ h2 []
+                [ text "Ethereum JSON-RPC Docs" ]
+            , p []
+                [ text "View JSON-RPC Json, with interactive twist-downs." ]
+            , p []
+                [ button [ onClick ExpandAll ]
+                    [ text "Expand All" ]
+                , text " "
+                , button [ onClick CollapseSome ]
+                    [ text "Collapse Some" ]
+                ]
+            , p []
+                [ JsonTree.view model.tree config model.state ]
             , p []
                 [ a [ href "https://arbitrage.wtf/" ]
                     [ text "Arbitrage.wtf" ]
