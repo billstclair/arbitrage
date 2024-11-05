@@ -1,5 +1,6 @@
 elm-stuff
 docs.json
 site/elm.js
-site/render.html
+site/docs.html
 site/LICENSE
+site/openrpc.json
