@@ -22,6 +22,7 @@ import Dict exposing (Dict)
 import Html exposing (Attribute, Html, h2, p, text)
 import Html.Attributes as Attributes exposing (style)
 import Html.Events exposing (keyCode, on)
+import Http
 import Json.Decode as JD exposing (Decoder, Value)
 import Json.Encode as JE
 import JsonTree exposing (TaggedValue(..))
@@ -42,6 +43,12 @@ main =
 
 view : Model -> Document Msg
 view model =
+    let
+        config =
+            { onSelect = Nothing
+            , toMsg = SetState
+            }
+    in
     { title = "Ethereum JSON-RPC Docs"
     , body =
         [ h2 []
@@ -49,7 +56,7 @@ view model =
         , p []
             [ text "View JSON-RPC Json, with interactive twist-downs." ]
         , p []
-            [ JsonTree.view model.tree model.config model.state ]
+            [ JsonTree.view model.tree config model.state ]
         ]
     }
 
@@ -57,7 +64,6 @@ view model =
 type alias Model =
     { state : JsonTree.State
     , tree : JsonTree.Node
-    , config : JsonTree.Config Msg
     }
 
 
@@ -65,6 +71,13 @@ type Msg
     = Noop
     | HandleUrlRequest UrlRequest
     | HandleUrlChange Url
+    | SetState JsonTree.State
+    | GotJson (Result Http.Error String)
+
+
+jsonFile : String
+jsonFile =
+    "openrpc.json"
 
 
 init : Value -> url -> Key -> ( Model, Cmd Msg )
@@ -77,18 +90,44 @@ init flags url key =
                 { value = TNull
                 , keyPath = ""
                 }
-            , config =
-                { onSelect = Nothing
-                , toMsg = \state -> Noop
-                }
             }
+
+        cmd =
+            Http.get
+                { url = jsonFile
+                , expect = Http.expectString GotJson
+                }
     in
-    model |> withNoCmd
+    model |> withCmd cmd
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model |> withNoCmd
+    case msg of
+        SetState state ->
+            { model | state = state } |> withNoCmd
+
+        GotJson result ->
+            case result of
+                Err _ ->
+                    model |> withNoCmd
+
+                Ok string ->
+                    case JsonTree.parseString string of
+                        Err _ ->
+                            model |> withNoCmd
+
+                        Ok node ->
+                            { model
+                                | tree =
+                                    { value = TList [ node ]
+                                    , keyPath = ""
+                                    }
+                            }
+                                |> withNoCmd
+
+        _ ->
+            model |> withNoCmd
 
 
 subscriptions : Model -> Sub Msg
