@@ -2,5 +2,5 @@
 
 cp docs/openrpc.json site/
 
-elm make src/Docs.elm --output site/docs.html
-bin/safari-patch site/docs.html
+elm make src/Docs.elm --output site/docs.js
+bin/safari-patch site/docs.js

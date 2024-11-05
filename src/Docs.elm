@@ -10,7 +10,7 @@
 ----------------------------------------------------------------------
 
 
-module Docs exposing (main)
+port module Docs exposing (main)
 
 import Arbitrage.Arbitrage as Arbitrage
 import Arbitrage.Types exposing (Coin, Price, Trader)
@@ -19,8 +19,8 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, button, h2, p, text)
-import Html.Attributes as Attributes exposing (style)
+import Html exposing (Attribute, Html, a, button, h2, p, text)
+import Html.Attributes as Attributes exposing (href, style)
 import Html.Events exposing (keyCode, on, onClick)
 import Http
 import Json.Decode as JD exposing (Decoder, Value)
@@ -64,6 +64,10 @@ view model =
             ]
         , p []
             [ JsonTree.view model.tree config model.state ]
+        , p []
+            [ a [ href "https://arbitrage.wtf/" ]
+                [ text "Arbitrage.wtf" ]
+            ]
         ]
     }
 
@@ -110,9 +114,37 @@ init flags url key =
     model |> withCmd cmd
 
 
+{-| This is used by links created by Util.toVirtualDom calls below.
+
+It forces them to open in a new tab/window.
+
+-}
+port openWindow : Value -> Cmd msg
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        HandleUrlRequest urlRequest ->
+            case Debug.log "OnUrlRequest" urlRequest of
+                External url ->
+                    model |> withCmd (openWindow <| JE.string url)
+
+                Internal url ->
+                    model |> withCmd (openWindow <| JE.string (Url.toString url))
+
+        HandleUrlChange url ->
+            let
+                url2 =
+                    Debug.log "OnUrlChange" url
+            in
+            case url2.fragment of
+                Nothing ->
+                    model |> withNoCmd
+
+                Just fragment ->
+                    model |> withCmd (openWindow <| JE.string ("#" ++ fragment))
+
         SetState state ->
             { model | state = state } |> withNoCmd
 
