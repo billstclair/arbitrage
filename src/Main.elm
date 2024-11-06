@@ -74,6 +74,10 @@ view model =
                 [ a [ href "./LICENSE" ]
                     [ text "LICENSE" ]
                 ]
+            , p []
+                [ a [ href "docs.html" ]
+                    [ text "Etherium JSON-RPC docs" ]
+                ]
             ]
         ]
     }
