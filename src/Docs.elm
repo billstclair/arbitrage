@@ -19,8 +19,8 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, a, button, div, h2, p, text, input)
-import Html.Attributes as Attributes exposing (href, style, size, value)
+import Html exposing (Attribute, Html, a, button, div, h2, input, p, text)
+import Html.Attributes as Attributes exposing (href, size, style, value)
 import Html.Events exposing (keyCode, on, onClick, onInput)
 import Http
 import Json.Decode as JD exposing (Decoder, Value)
@@ -59,29 +59,51 @@ view model =
                 [ text "Ethereum JSON-RPC Docs" ]
             , p []
                 [ text "View JSON-RPC Json, with interactive twist-downs." ]
+            , p [ style "color" "red" ]
+                [ case model.error of
+                    Nothing ->
+                        text ""
+
+                    Just err ->
+                        text err
+                ]
+            , p []
+                [ input
+                    [ onInput InputUrl
+                    , value model.url
+                    , size 30
+                    ]
+                    []
+                , text " "
+                , button
+                    [ onClick LoadUrl
+                    ]
+                    [ text "Load JSON" ]
+                ]
             , p []
                 [ button [ onClick ExpandAll ]
                     [ text "Expand All" ]
                 , text " "
                 , button [ onClick CollapseSome ]
                     [ text "Collapse Some" ]
-            , text " "
-            , input
-                [ onInput InputSome
-                , value model.someString
-                , size 2
-                , onKeyDown
-                    (\code ->
-                        if code == 13 then
-                            CollapseSome
+                , text " "
+                , input
+                    [ onInput InputSome
+                    , value model.someString
+                    , size 2
+                    , onKeyDown
+                        (\code ->
+                            if code == 13 then
+                                CollapseSome
 
-                        else
-                            Noop
-                    )
+                            else
+                                Noop
+                        )
+                    ]
+                    []
+                , p []
+                    [ JsonTree.view model.tree config model.state ]
                 ]
-                []
-            , p []
-                [ JsonTree.view model.tree config model.state ]
             , p []
                 [ a [ href "https://arbitrage.wtf/" ]
                     [ text "Arbitrage.wtf" ]
@@ -97,10 +119,12 @@ onKeyDown tagger =
 
 
 type alias Model =
-    { state : JsonTree.State
+    { error : Maybe String
+    , state : JsonTree.State
     , tree : JsonTree.Node
     , someString : String
     , some : Int
+    , url : String
     }
 
 
@@ -113,6 +137,8 @@ type Msg
     | ExpandAll
     | CollapseSome
     | InputSome String
+    | InputUrl String
+    | LoadUrl
 
 
 jsonFile : String
@@ -125,18 +151,20 @@ init flags url key =
     let
         model : Model
         model =
-            { tree =
+            { error = Nothing
+            , tree =
                 { value = TNull
                 , keyPath = ""
                 }
             , state = JsonTree.defaultState
             , someString = "4"
             , some = 4
+            , url = jsonFile
             }
 
         cmd =
             Http.get
-                { url = jsonFile
+                { url = model.url
                 , expect = Http.expectString GotJson
                 }
     in
@@ -179,8 +207,11 @@ update msg model =
 
         GotJson result ->
             case result of
-                Err _ ->
-                    model |> withNoCmd
+                Err err ->
+                    { model
+                        | error = Just <| Debug.toString err
+                    }
+                        |> withNoCmd
 
                 Ok string ->
                     case JsonTree.parseString string of
@@ -223,6 +254,19 @@ update msg model =
                 Just some ->
                     { m | some = some }
                         |> withNoCmd
+
+        InputUrl url ->
+            { model | url = url }
+                |> withNoCmd
+
+        LoadUrl ->
+            { model | error = Nothing }
+                |> withCmd
+                    (Http.get
+                        { url = model.url
+                        , expect = Http.expectString GotJson
+                        }
+                    )
 
         _ ->
             model |> withNoCmd
