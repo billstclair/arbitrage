@@ -19,7 +19,7 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, a, button, div, h2, input, p, text)
+import Html exposing (Attribute, Html, a, button, div, h2, input, p, text, textarea)
 import Html.Attributes as Attributes exposing (href, size, style, value)
 import Html.Events exposing (keyCode, on, onClick, onInput)
 import Http
@@ -80,6 +80,17 @@ view model =
                     ]
                     [ text "Load JSON" ]
                 ]
+            , if model.url == "" then
+                textarea
+                    [ value model.json
+                    , onInput InputJson
+                    , style "width" "60em"
+                    , style "height" "10em"
+                    ]
+                    []
+
+              else
+                text ""
             , p []
                 [ button [ onClick ExpandAll ]
                     [ text "Expand All" ]
@@ -125,6 +136,7 @@ type alias Model =
     , someString : String
     , some : Int
     , url : String
+    , json : String
     }
 
 
@@ -138,6 +150,7 @@ type Msg
     | CollapseSome
     | InputSome String
     | InputUrl String
+    | InputJson String
     | LoadUrl
 
 
@@ -160,6 +173,7 @@ init flags url key =
             , someString = "4"
             , some = 4
             , url = jsonFile
+            , json = ""
             }
 
         cmd =
@@ -214,20 +228,7 @@ update msg model =
                         |> withNoCmd
 
                 Ok string ->
-                    case JsonTree.parseString string of
-                        Err _ ->
-                            model |> withNoCmd
-
-                        Ok node ->
-                            { model
-                                | tree =
-                                    { value = TList [ node ]
-                                    , keyPath = ""
-                                    }
-                                , state =
-                                    JsonTree.collapseToDepth 3 node model.state
-                            }
-                                |> withNoCmd
+                    parseJsonString string model
 
         ExpandAll ->
             { model
@@ -259,17 +260,45 @@ update msg model =
             { model | url = url }
                 |> withNoCmd
 
+        InputJson json ->
+            { model | json = json }
+                |> withNoCmd
+
         LoadUrl ->
-            { model | error = Nothing }
-                |> withCmd
-                    (Http.get
-                        { url = model.url
-                        , expect = Http.expectString GotJson
-                        }
-                    )
+            if model.url == "" then
+                parseJsonString model.json model
+
+            else
+                { model | error = Nothing }
+                    |> withCmd
+                        (Http.get
+                            { url = model.url
+                            , expect = Http.expectString GotJson
+                            }
+                        )
 
         _ ->
             model |> withNoCmd
+
+
+parseJsonString : String -> Model -> ( Model, Cmd Msg )
+parseJsonString string model =
+    case JsonTree.parseString string of
+        Err err ->
+            { model | error = Just <| Debug.toString err }
+                |> withNoCmd
+
+        Ok node ->
+            { model
+                | error = Nothing
+                , tree =
+                    { value = TList [ node ]
+                    , keyPath = ""
+                    }
+                , state =
+                    JsonTree.collapseToDepth 3 node model.state
+            }
+                |> withNoCmd
 
 
 subscriptions : Model -> Sub Msg
