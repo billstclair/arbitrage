@@ -19,9 +19,9 @@ import Browser.Navigation as Navigation exposing (Key)
 import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
-import Html exposing (Attribute, Html, button, h2, p, text)
-import Html.Attributes as Attributes exposing (style)
-import Html.Events exposing (keyCode, on, onClick)
+import Html exposing (Attribute, Html, button, h2, input, p, text)
+import Html.Attributes as Attributes exposing (size, style, value)
+import Html.Events exposing (keyCode, on, onClick, onInput)
 import Http
 import Json.Decode as JD exposing (Decoder, Value)
 import Json.Encode as JE
@@ -61,6 +61,21 @@ view model =
             , text " "
             , button [ onClick CollapseSome ]
                 [ text "Collapse Some" ]
+            , text " "
+            , input
+                [ onInput InputSome
+                , value model.someString
+                , size 2
+                , onKeyDown
+                    (\code ->
+                        if code == 13 then
+                            CollapseSome
+
+                        else
+                            Noop
+                    )
+                ]
+                []
             ]
         , p []
             [ JsonTree.view model.tree config model.state ]
@@ -68,9 +83,16 @@ view model =
     }
 
 
+onKeyDown : (Int -> msg) -> Attribute msg
+onKeyDown tagger =
+    on "keydown" (JD.map tagger keyCode)
+
+
 type alias Model =
     { state : JsonTree.State
     , tree : JsonTree.Node
+    , someString : String
+    , some : Int
     }
 
 
@@ -82,6 +104,7 @@ type Msg
     | GotJson (Result Http.Error String)
     | ExpandAll
     | CollapseSome
+    | InputSome String
 
 
 jsonFile : String
@@ -99,6 +122,8 @@ init flags url key =
                 , keyPath = ""
                 }
             , state = JsonTree.defaultState
+            , someString = "4"
+            , some = 4
             }
 
         cmd =
@@ -145,9 +170,23 @@ update msg model =
 
         CollapseSome ->
             { model
-                | state = JsonTree.collapseToDepth 4 model.tree model.state
+                | state = JsonTree.collapseToDepth model.some model.tree model.state
             }
                 |> withNoCmd
+
+        -- TODO
+        InputSome someString ->
+            let
+                m =
+                    { model | someString = someString }
+            in
+            case String.toInt someString of
+                Nothing ->
+                    m |> withNoCmd
+
+                Just some ->
+                    { m | some = some }
+                        |> withNoCmd
 
         _ ->
             model |> withNoCmd
