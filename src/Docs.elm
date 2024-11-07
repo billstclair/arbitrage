@@ -20,7 +20,7 @@ import Char
 import Cmd.Extra exposing (withCmd, withCmds, withNoCmd)
 import Dict exposing (Dict)
 import Html exposing (Attribute, Html, a, button, div, h2, input, p, text, textarea)
-import Html.Attributes as Attributes exposing (href, size, style, value)
+import Html.Attributes as Attributes exposing (checked, disabled, href, size, style, type_, value)
 import Html.Events exposing (keyCode, on, onClick, onInput)
 import Http
 import Json.Decode as JD exposing (Decoder, Value)
@@ -69,9 +69,16 @@ view model =
                 ]
             , p []
                 [ input
+                    [ type_ "checkbox"
+                    , onClick ToggleUseUrl
+                    , checked model.useUrl
+                    ]
+                    []
+                , input
                     [ onInput InputUrl
                     , value model.url
                     , size 30
+                    , disabled (not model.useUrl)
                     ]
                     []
                 , text " "
@@ -80,17 +87,22 @@ view model =
                     ]
                     [ text "Load JSON" ]
                 ]
-            , if model.url == "" then
+            , if not model.useUrl then
                 textarea
                     [ value model.json
                     , onInput InputJson
                     , style "width" "60em"
                     , style "height" "10em"
+                    , style "margin-left" "10px"
                     ]
                     []
 
               else
                 text ""
+            , p []
+                [ a [ href "https://arbitrage.wtf/" ]
+                    [ text "Arbitrage.wtf" ]
+                ]
             , p []
                 [ button [ onClick ExpandAll ]
                     [ text "Expand All" ]
@@ -115,10 +127,6 @@ view model =
                 , p []
                     [ JsonTree.view model.tree config model.state ]
                 ]
-            , p []
-                [ a [ href "https://arbitrage.wtf/" ]
-                    [ text "Arbitrage.wtf" ]
-                ]
             ]
         ]
     }
@@ -135,6 +143,7 @@ type alias Model =
     , tree : JsonTree.Node
     , someString : String
     , some : Int
+    , useUrl : Bool
     , url : String
     , json : String
     }
@@ -149,6 +158,7 @@ type Msg
     | ExpandAll
     | CollapseSome
     | InputSome String
+    | ToggleUseUrl
     | InputUrl String
     | InputJson String
     | LoadUrl
@@ -172,6 +182,7 @@ init flags url key =
             , state = JsonTree.defaultState
             , someString = "4"
             , some = 4
+            , useUrl = True
             , url = jsonFile
             , json = ""
             }
@@ -260,12 +271,16 @@ update msg model =
             { model | url = url }
                 |> withNoCmd
 
+        ToggleUseUrl ->
+            { model | useUrl = not model.useUrl }
+                |> withNoCmd
+
         InputJson json ->
             { model | json = json }
                 |> withNoCmd
 
         LoadUrl ->
-            if model.url == "" then
+            if not model.useUrl then
                 parseJsonString model.json model
 
             else
