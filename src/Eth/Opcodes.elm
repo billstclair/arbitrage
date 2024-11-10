@@ -60,23 +60,13 @@ opcodesList =
     , ( ( 0x1C, "SHR", 3 ), "[shift,value]" "value >> shift" "Logical right shift operation" )
     , ( ( 0x1D, "SAR", 3 ), "[shift]" "value >> shift" "Arithmetic (signed) right shift operation" )
     , ( ( 0x20, "KECCAK256", 30 ), ( "[offset,size]", "hash", "Compute Keccak-256 hash" ) )
-    , ( ( 0 X30, "ADDRESS", 2 ), ( "[address]", "write current address at 'address'", "Get address of currently executing account" ) )
+    , ( ( 0 X30, "ADDRESS", 2 ), ( "[address]", "write current current address at 'address'", "Get address of currently executing account" ) )
+    , ( ( 0x31, "BALANCE", 100 ), ( [ address, balance ], "Get balance of" the given "account", "32" ) )
+    , ( ( 0 XORIGIN, "2", address ), ( "Get execution origination [address]", "write address at 'address'", "33" ) )
     ]
 
 
-{-| 31
-BALANCE
-100
-address
-balance
-Get balance of the given account
-32
-ORIGIN
-2
-address
-Get execution origination address
-33
-CALLER
+{-| CALLER
 2
 address
 Get caller address
