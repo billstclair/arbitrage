@@ -86,691 +86,486 @@ opcodesList =
     , ( ( 0x47, "SELFBALANCE", 5 ), ( "", "balance", "Get balance of currently executing account" ) )
     , ( ( 0x48, "BASEFEE", 2 ), ( "", "baseFee", "Get the base fee" ) )
     , ( ( 0x49, "BLOBHASH", 3 ), ( "[index]", "blobVersionedHashesAtIndex", "Get versioned hashes" ) )
+    , ( ( 0x4A, "BLOBBASEFEE", 2 ), ( "", "blobBaseFee", "Returns the value of the blob base-fee of the current block" ) )
+    , ( ( 0x50, "POP", 2 ), ( "[y]", "", "Remove item from stack" ) )
+    , ( ( 0x51, "MLOAD", 3 ), ( "[offset]", "value", "Load word from memory" ) )
+    , ( ( 0x52, "MSTORE", 3 ), ( "[offset,value]", "", "Save word to memory" ) )
+    , ( ( 0x53, "MSTORE8", 3 ), ( "[offset,value]", "", "Save byte to memory" ) )
+    , ( ( 0x54, "SLOAD", 100 ), ( "[key]", "value", "Load word from storage" ) )
+    , ( ( 0x55, "SSTORE", 100 ), ( "[key,value]", "", "Save word to storage" ) )
+    , ( ( 0x56, "JUMP", 8 ), ( "[counter]", "", "Alter the program counter" ) )
+    , ( ( 0x57, "JUMPI", 10 ), ( "[counter,b]", "", "Conditionally alter the program counter" ) )
+    , ( ( 0x58, "PC", 2 ), ( "", "counter", "Get the value of the program counter prior to the increment corresponding to this instruction" ) )
+    , ( ( 0x59, "MSIZE", 2 ), ( "", "size", "Get the size of active memory in bytes" ) )
+    , ( ( 0x5A, "GAS", 2 ), ( "", "gas", "Get the amount of available gas, including the corresponding reduction for the cost of this instruction" ) )
+    , ( ( 0x5B, "JUMPDEST", 1 ), ( "", "", "Mark a valid destination for jumps" ) )
+    , ( ( 0x5C, "TLOAD", 100 ), ( "[key]", "value", "Load word from transient storage" ) )
+    , ( ( 0x5D, "TSTORE", 100 ), ( "[key,value]", "", "Save word to transient storage" ) )
+    , ( ( 0x5E, "MCOPY", 3 ), ( "[destOffset,offset,size]", "", "Copy memory areas" ) )
+    , ( ( 0x5F, "PUSH0", 2 ), ( "", "0", "Place value 0 on stack" ) )
+    , ( ( 0x60, "PUSH1", 3 ), ( "", "value", "Place 1 byte item on stack" ) )
+    , ( ( 0x61, "PUSH2", 3 ), ( "", "value", "Place 2 byte item on stack" ) )
+    , ( ( 0x62, "PUSH3", 3 ), ( "", "value", "Place 3 byte item on stack" ) )
+    , ( ( 0x63, "PUSH4", 3 ), ( "", "value", "Place 4 byte item on stack" ) )
+    , ( ( 0x64, "PUSH5", 3 ), ( "", "value", "Place 5 byte item on stack" ) )
+    , ( ( 0x65, "PUSH6", 3 ), ( "", "value", "Place 6 byte item on stack" ) )
+    , ( ( 0x66, "PUSH7", 3 ), ( "", "value", "Place 7 byte item on stack" ) )
+    , ( ( 0x67, "PUSH8", 3 ), ( "", "value", "Place 8 byte item on stack" ) )
+    , ( ( 0x68, "PUSH9", 3 ), ( "", "value", "Place 9 byte item on stack" ) )
+    , ( ( 0x69, "PUSH10", 3 ), ( "", "value", "Place 10 byte item on stack" ) )
+    , ( ( 0x6A, "PUSH11", 3 ), ( "", "value", "Place 11 byte item on stack" ) )
+    , ( ( 0x6B, "PUSH12", 3 ), ( "", "value", "Place 12 byte item on stack" ) )
+    , ( ( 0x6C, "PUSH13", 3 ), ( "", "value", "Place 13 byte item on stack" ) )
+    , ( ( 0x6D, "PUSH14", 3 ), ( "", "value", "Place 14 byte item on stack" ) )
+    , ( ( 0x6E, "PUSH15", 3 ), ( "", "value", "Place 15 byte item on stack" ) )
+    , ( ( 0x6F, "PUSH16", 3 ), ( "", "value", "Place 16 byte item on stack" ) )
+    , ( ( 0x70, "PUSH17", 3 ), ( "", "value", "Place 17 byte item on stack" ) )
+    , ( ( 0x71, "PUSH18", 3 ), ( "", "value", "Place 18 byte item on stack" ) )
+    , ( ( 0x72, "PUSH19", 3 ), ( "", "value", "Place 19 byte item on stack" ) )
+    , ( ( 0x73, "PUSH20", 3 ), ( "", "value", "Place 20 byte item on stack" ) )
+    , ( ( 0x74, "PUSH21", 3 ), ( "", "value", "Place 21 byte item on stack" ) )
+    , ( ( 0x75, "PUSH22", 3 ), ( "", "value", "Place 22 byte item on stack" ) )
+    , ( ( 0x76, "PUSH23", 3 ), ( "", "value", "Place 23 byte item on stack" ) )
+    , ( ( 0x77, "PUSH24", 3 ), ( "", "value", "Place 24 byte item on stack" ) )
+    , ( ( 0x78, "PUSH25", 3 ), ( "", "value", "Place 25 byte item on stack" ) )
+    , ( ( 0x79, "PUSH26", 3 ), ( "", "value", "Place 26 byte item on stack" ) )
+    , ( ( 0x7A, "PUSH27", 3 ), ( "", "value", "Place 27 byte item on stack" ) )
+    , ( ( 0x7B, "PUSH28", 3 ), ( "", "value", "Place 28 byte item on stack" ) )
+    , ( ( 0x7C, "PUSH29", 3 ), ( "", "value", "Place 29 byte item on stack" ) )
+    , ( ( 0x7D, "PUSH30", 3 ), ( "", "value", "Place 30 byte item on stack" ) )
+    , ( ( 0x7E, "PUSH31", 3 ), ( "", "value", "Place 31 byte item on stack" ) )
+    , ( ( 0x7F, "PUSH32", 3 ), ( "", "value", "Place 32 byte (full word) item on stack" ) )
     ]
 
 
 
 {-
-   4a
-      BLOBBASEFEE
-      2
-      blobBaseFee
-      Returns the value of the blob base-fee of the current block
-      50
-      POP
-      2
-      y
-      Remove item from stack
-      51
-      MLOAD
-      3
-      offset
-      value
-      Load word from memory
-      52
-      MSTORE
-      3
-      offset
-      value
-      Save word to memory
-      53
-      MSTORE8
-      3
-      offset
-      value
-      Save byte to memory
-      54
-      SLOAD
-      100
-      key
-      value
-      Load word from storage
-      55
-      SSTORE
-      100
-      key
-      value
-      Save word to storage
-      56
-      JUMP
-      8
-      counter
-      Alter the program counter
-      57
-      JUMPI
-      10
-      counter
-      b
-      Conditionally alter the program counter
-      58
-      PC
-      2
-      counter
-      Get the value of the program counter prior to the increment corresponding to this instruction
-      59
-      MSIZE
-      2
-      size
-      Get the size of active memory in bytes
-      5a
-      GAS
-      2
-      gas
-      Get the amount of available gas, including the corresponding reduction for the cost of this instruction
-      5b
-      JUMPDEST
-      1
-      Mark a valid destination for jumps
-      5c
-      TLOAD
-      100
-      key
-      value
-      Load word from transient storage
-      5d
-      TSTORE
-      100
-      key
-      value
-      Save word to transient storage
-      5e
-      MCOPY
-      3
-      destOffset
-      offset
-      size
-      Copy memory areas
-      5f
-      PUSH0
-      2
-      0
-      Place value 0 on stack
-      60
-      PUSH1
-      3
-      value
-      Place 1 byte item on stack
-      61
-      PUSH2
-      3
-      value
-      Place 2 byte item on stack
-      62
-      PUSH3
-      3
-      value
-      Place 3 byte item on stack
-      63
-      PUSH4
-      3
-      value
-      Place 4 byte item on stack
-      64
-      PUSH5
-      3
-      value
-      Place 5 byte item on stack
-      65
-      PUSH6
-      3
-      value
-      Place 6 byte item on stack
-      66
-      PUSH7
-      3
-      value
-      Place 7 byte item on stack
-      67
-      PUSH8
-      3
-      value
-      Place 8 byte item on stack
-      68
-      PUSH9
-      3
-      value
-      Place 9 byte item on stack
-      69
-      PUSH10
-      3
-      value
-      Place 10 byte item on stack
-      6a
-      PUSH11
-      3
-      value
-      Place 11 byte item on stack
-      6b
-      PUSH12
-      3
-      value
-      Place 12 byte item on stack
-      6c
-      PUSH13
-      3
-      value
-      Place 13 byte item on stack
-      6d
-      PUSH14
-      3
-      value
-      Place 14 byte item on stack
-      6e
-      PUSH15
-      3
-      value
-      Place 15 byte item on stack
-      6f
-      PUSH16
-      3
-      value
-      Place 16 byte item on stack
-      70
-      PUSH17
-      3
-      value
-      Place 17 byte item on stack
-      71
-      PUSH18
-      3
-      value
-      Place 18 byte item on stack
-      72
-      PUSH19
-      3
-      value
-      Place 19 byte item on stack
-      73
-      PUSH20
-      3
-      value
-      Place 20 byte item on stack
-      74
-      PUSH21
-      3
-      value
-      Place 21 byte item on stack
-      75
-      PUSH22
-      3
-      value
-      Place 22 byte item on stack
-      76
-      PUSH23
-      3
-      value
-      Place 23 byte item on stack
-      77
-      PUSH24
-      3
-      value
-      Place 24 byte item on stack
-      78
-      PUSH25
-      3
-      value
-      Place 25 byte item on stack
-      79
-      PUSH26
-      3
-      value
-      Place 26 byte item on stack
-      7a
-      PUSH27
-      3
-      value
-      Place 27 byte item on stack
-      7b
-      PUSH28
-      3
-      value
-      Place 28 byte item on stack
-      7c
-      PUSH29
-      3
-      value
-      Place 29 byte item on stack
-      7d
-      PUSH30
-      3
-      value
-      Place 30 byte item on stack
-      7e
-      PUSH31
-      3
-      value
-      Place 31 byte item on stack
-      7f
-      PUSH32
-      3
-      value
-      Place 32 byte (full word) item on stack
-      80
-      DUP1
-      3
-      value
-      value
-      value
-      Duplicate 1st stack item
-      81
-      DUP2
-      3
-      a
-      b
-      b
-      a
-      b
-      Duplicate 2nd stack item
-      82
-      DUP3
-      3
-      a
-      b
-      c
-      c
-      a
-      b
-      c
-      Duplicate 3rd stack item
-      83
-      DUP4
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 4th stack item
-      84
-      DUP5
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 5th stack item
-      85
-      DUP6
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 6th stack item
-      86
-      DUP7
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 7th stack item
-      87
-      DUP8
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 8th stack item
-      88
-      DUP9
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 9th stack item
-      89
-      DUP10
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 10th stack item
-      8a
-      DUP11
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 11th stack item
-      8b
-      DUP12
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 12th stack item
-      8c
-      DUP13
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 13th stack item
-      8d
-      DUP14
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 14th stack item
-      8e
-      DUP15
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 15th stack item
-      8f
-      DUP16
-      3
-      ...
-      value
-      value
-      ...
-      value
-      Duplicate 16th stack item
-      90
-      SWAP1
-      3
-      a
-      b
-      b
-      a
-      Exchange 1st and 2nd stack items
-      91
-      SWAP2
-      3
-      a
-      b
-      c
-      c
-      b
-      a
-      Exchange 1st and 3rd stack items
-      92
-      SWAP3
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 4th stack items
-      93
-      SWAP4
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 5th stack items
-      94
-      SWAP5
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 6th stack items
-      95
-      SWAP6
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 7th stack items
-      96
-      SWAP7
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 8th stack items
-      97
-      SWAP8
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 9th stack items
-      98
-      SWAP9
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 10th stack items
-      99
-      SWAP10
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 11th stack items
-      9a
-      SWAP11
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 12th stack items
-      9b
-      SWAP12
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 13th stack items
-      9c
-      SWAP13
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 14th stack items
-      9d
-      SWAP14
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 15th stack items
-      9e
-      SWAP15
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 16th stack items
-      9f
-      SWAP16
-      3
-      a
-      ...
-      b
-      b
-      ...
-      a
-      Exchange 1st and 17th stack items
-      a0
-      LOG0
-      375
-      offset
-      size
-      Append log record with no topics
-      a1
-      LOG1
-      750
-      offset
-      size
-      topic
-      Append log record with one topic
-      a2
-      LOG2
-      1125
-      offset
-      size
-      topic1
-      topic2
-      Append log record with two topics
-      a3
-      LOG3
-      1500
-      offset
-      size
-      topic1
-      topic2
-      topic3
-      Append log record with three topics
-      a4
-      LOG4
-      1875
-      offset
-      size
-      topic1
-      topic2
-      topic3
-      topic4
-      Append log record with four topics
-      f0
-      CREATE
-      32000
-      value
-      offset
-      size
-      address
-      Create a new account with associated code
-      f1
-      CALL
-      100
-      gas
-      address
-      value
-      argsOffset
-      argsSize
-      retOffset
-      retSize
-      success
-      Message-call into an account
-      f2
-      CALLCODE
-      100
-      gas
-      address
-      value
-      argsOffset
-      argsSize
-      retOffset
-      retSize
-      success
-      Message-call into this account with alternative account’s code
-      f3
-      RETURN
-      0
-      offset
-      size
-      Halt execution returning output data
-      f4
-      DELEGATECALL
-      100
-      gas
-      address
-      argsOffset
-      argsSize
-      retOffset
-      retSize
-      success
-      Message-call into this account with an alternative account’s code, but persisting the current values for sender and value
-      f5
-      CREATE2
-      32000
-      value
-      offset
-      size
-      salt
-      address
-      Create a new account with associated code at a predictable address
-      fa
-      STATICCALL
-      100
-      gas
-      address
-      argsOffset
-      argsSize
-      retOffset
-      retSize
-      success
-      Static message-call into an account
-      fd
-      REVERT
-      0
-      offset
-      size
-      Halt execution reverting state changes but returning data and remaining gas
-      fe
-      INVALID
-      NaN
-      Designated invalid instruction
-      ff
-      SELFDESTRUCT
-      5000
-      address
-      Halt execution and register account for later deletion or send all Ether to address (post-Cancun)
+   80
+   DUP1
+   3
+   value
+   value
+   value
+   Duplicate 1st stack item
+   81
+   DUP2
+   3
+   a
+   b
+   b
+   a
+   b
+   Duplicate 2nd stack item
+   82
+   DUP3
+   3
+   a
+   b
+   c
+   c
+   a
+   b
+   c
+   Duplicate 3rd stack item
+   83
+   DUP4
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 4th stack item
+   84
+   DUP5
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 5th stack item
+   85
+   DUP6
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 6th stack item
+   86
+   DUP7
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 7th stack item
+   87
+   DUP8
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 8th stack item
+   88
+   DUP9
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 9th stack item
+   89
+   DUP10
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 10th stack item
+   8a
+   DUP11
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 11th stack item
+   8b
+   DUP12
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 12th stack item
+   8c
+   DUP13
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 13th stack item
+   8d
+   DUP14
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 14th stack item
+   8e
+   DUP15
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 15th stack item
+   8f
+   DUP16
+   3
+   ...
+   value
+   value
+   ...
+   value
+   Duplicate 16th stack item
+   90
+   SWAP1
+   3
+   a
+   b
+   b
+   a
+   Exchange 1st and 2nd stack items
+   91
+   SWAP2
+   3
+   a
+   b
+   c
+   c
+   b
+   a
+   Exchange 1st and 3rd stack items
+   92
+   SWAP3
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 4th stack items
+   93
+   SWAP4
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 5th stack items
+   94
+   SWAP5
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 6th stack items
+   95
+   SWAP6
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 7th stack items
+   96
+   SWAP7
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 8th stack items
+   97
+   SWAP8
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 9th stack items
+   98
+   SWAP9
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 10th stack items
+   99
+   SWAP10
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 11th stack items
+   9a
+   SWAP11
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 12th stack items
+   9b
+   SWAP12
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 13th stack items
+   9c
+   SWAP13
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 14th stack items
+   9d
+   SWAP14
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 15th stack items
+   9e
+   SWAP15
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 16th stack items
+   9f
+   SWAP16
+   3
+   a
+   ...
+   b
+   b
+   ...
+   a
+   Exchange 1st and 17th stack items
+   a0
+   LOG0
+   375
+   offset
+   size
+   Append log record with no topics
+   a1
+   LOG1
+   750
+   offset
+   size
+   topic
+   Append log record with one topic
+   a2
+   LOG2
+   1125
+   offset
+   size
+   topic1
+   topic2
+   Append log record with two topics
+   a3
+   LOG3
+   1500
+   offset
+   size
+   topic1
+   topic2
+   topic3
+   Append log record with three topics
+   a4
+   LOG4
+   1875
+   offset
+   size
+   topic1
+   topic2
+   topic3
+   topic4
+   Append log record with four topics
+   f0
+   CREATE
+   32000
+   value
+   offset
+   size
+   address
+   Create a new account with associated code
+   f1
+   CALL
+   100
+   gas
+   address
+   value
+   argsOffset
+   argsSize
+   retOffset
+   retSize
+   success
+   Message-call into an account
+   f2
+   CALLCODE
+   100
+   gas
+   address
+   value
+   argsOffset
+   argsSize
+   retOffset
+   retSize
+   success
+   Message-call into this account with alternative account’s code
+   f3
+   RETURN
+   0
+   offset
+   size
+   Halt execution returning output data
+   f4
+   DELEGATECALL
+   100
+   gas
+   address
+   argsOffset
+   argsSize
+   retOffset
+   retSize
+   success
+   Message-call into this account with an alternative account’s code, but persisting the current values for sender and value
+   f5
+   CREATE2
+   32000
+   value
+   offset
+   size
+   salt
+   address
+   Create a new account with associated code at a predictable address
+   fa
+   STATICCALL
+   100
+   gas
+   address
+   argsOffset
+   argsSize
+   retOffset
+   retSize
+   success
+   Static message-call into an account
+   fd
+   REVERT
+   0
+   offset
+   size
+   Halt execution reverting state changes but returning data and remaining gas
+   fe
+   INVALID
+   NaN
+   Designated invalid instruction
+   ff
+   SELFDESTRUCT
+   5000
+   address
+   Halt execution and register account for later deletion or send all Ether to address (post-Cancun)
 -}
 
 
