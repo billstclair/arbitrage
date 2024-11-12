@@ -135,313 +135,43 @@ opcodesList =
     , ( ( 0x7D, "PUSH30", 3 ), ( "", "value", "Place 30 byte item on stack" ) )
     , ( ( 0x7E, "PUSH31", 3 ), ( "", "value", "Place 31 byte item on stack" ) )
     , ( ( 0x7F, "PUSH32", 3 ), ( "", "value", "Place 32 byte (full word) item on stack" ) )
+    , ( ( 0x80, "DUP1", 3 ), ( "[value]", "value", "Duplicate 1st stack item" ) )
+    , ( ( 0x81, "DUP2", 3 ), ( "[a,b]", "[b,a,b]", "Duplicate 2nd stack item" ) )
+    , ( ( 0x82, "DUP3", 3 ), ( "[a,b,c]", "[c,a,b,c]", "Duplicate 3rd stack item" ) )
+    , ( ( 0x83, "DUP4", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 4th stack item" ) )
+    , ( ( 0x84, "DUP5", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 5th stack item" ) )
+    , ( ( 0x85, "DUP6", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 6th stack item" ) )
+    , ( ( 0x86, "DUP7", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 7th stack item" ) )
+    , ( ( 0x87, "DUP8", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 8th stack item" ) )
+    , ( ( 0x88, "DUP9", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 9th stack item" ) )
+    , ( ( 0x89, "DUP10", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 10th stack item" ) )
+    , ( ( 0x8A, "DUP11", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 11th stack item" ) )
+    , ( ( 0x8B, "DUP12", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 12th stack item" ) )
+    , ( ( 0x8C, "DUP13", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 13th stack item" ) )
+    , ( ( 0x8D, "DUP14", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 14th stack item" ) )
+    , ( ( 0x8E, "DUP15", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 15th stack item" ) )
+    , ( ( 0x8F, "DUP16", 3 ), ( "[...,value]", "[value,...,value]", "Duplicate 16th stack item" ) )
+    , ( ( 0x90, "SWAP1", 3 ), ( "[a,b]", "[b,a]", "Exchange 1st and 2nd stack items" ) )
+    , ( ( 0x91, "SWAP2", 3 ), ( "[a,b,c]", "[c,b,a]", "Exchange 1st and 3rd stack items" ) )
+    , ( ( 0x92, "SWAP3", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 4th stack items" ) )
+    , ( ( 0x93, "SWAP4", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 5th stack items" ) )
+    , ( ( 0x94, "SWAP5", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 6th stack items" ) )
+    , ( ( 0x95, "SWAP6", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 7th stack items" ) )
+    , ( ( 0x96, "SWAP7", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 8th stack items" ) )
+    , ( ( 0x97, "SWAP8", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 9th stack items" ) )
+    , ( ( 0x98, "SWAP9", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 10th stack items" ) )
+    , ( ( 0x99, "SWAP10", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 11th stack items" ) )
+    , ( ( 0x9A, "SWAP11", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 12th stack items" ) )
+    , ( ( 0x9B, "SWAP12", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 13th stack items" ) )
+    , ( ( 0x9C, "SWAP13", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 14th stack items" ) )
+    , ( ( 0x9D, "SWAP14", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 15th stack items" ) )
+    , ( ( 0x9E, "SWAP15", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 16th stack items" ) )
+    , ( ( 0x9F, "SWAP16", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 17th stack items" ) )
     ]
 
 
 
 {-
-   80
-   DUP1
-   3
-   value
-   value
-   value
-   Duplicate 1st stack item
-   81
-   DUP2
-   3
-   a
-   b
-   b
-   a
-   b
-   Duplicate 2nd stack item
-   82
-   DUP3
-   3
-   a
-   b
-   c
-   c
-   a
-   b
-   c
-   Duplicate 3rd stack item
-   83
-   DUP4
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 4th stack item
-   84
-   DUP5
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 5th stack item
-   85
-   DUP6
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 6th stack item
-   86
-   DUP7
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 7th stack item
-   87
-   DUP8
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 8th stack item
-   88
-   DUP9
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 9th stack item
-   89
-   DUP10
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 10th stack item
-   8a
-   DUP11
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 11th stack item
-   8b
-   DUP12
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 12th stack item
-   8c
-   DUP13
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 13th stack item
-   8d
-   DUP14
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 14th stack item
-   8e
-   DUP15
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 15th stack item
-   8f
-   DUP16
-   3
-   ...
-   value
-   value
-   ...
-   value
-   Duplicate 16th stack item
-   90
-   SWAP1
-   3
-   a
-   b
-   b
-   a
-   Exchange 1st and 2nd stack items
-   91
-   SWAP2
-   3
-   a
-   b
-   c
-   c
-   b
-   a
-   Exchange 1st and 3rd stack items
-   92
-   SWAP3
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 4th stack items
-   93
-   SWAP4
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 5th stack items
-   94
-   SWAP5
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 6th stack items
-   95
-   SWAP6
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 7th stack items
-   96
-   SWAP7
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 8th stack items
-   97
-   SWAP8
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 9th stack items
-   98
-   SWAP9
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 10th stack items
-   99
-   SWAP10
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 11th stack items
-   9a
-   SWAP11
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 12th stack items
-   9b
-   SWAP12
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 13th stack items
-   9c
-   SWAP13
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 14th stack items
-   9d
-   SWAP14
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 15th stack items
-   9e
-   SWAP15
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 16th stack items
-   9f
-   SWAP16
-   3
-   a
-   ...
-   b
-   b
-   ...
-   a
-   Exchange 1st and 17th stack items
    a0
    LOG0
    375
