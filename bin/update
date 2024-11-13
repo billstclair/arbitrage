@@ -2,5 +2,6 @@
 
 bin/build
 bin/build-docs
+bin/build-ethassem
 cd site
 rsyncit

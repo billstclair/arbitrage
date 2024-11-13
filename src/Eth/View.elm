@@ -51,5 +51,6 @@ viewOpcode opcode =
         , stringTD opcode.name
         , stringTD (String.fromInt opcode.gas)
         , stringTD opcode.input
+        , stringTD opcode.output
         , stringTD opcode.description
         ]

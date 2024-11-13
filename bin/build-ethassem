@@ -1,0 +1,4 @@
+#!/bin/bash
+
+elm make src/EthAssem.elm --output site/ethassem.html
+bin/safari-patch site/ethassem.html
