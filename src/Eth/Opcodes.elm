@@ -167,137 +167,19 @@ opcodesList =
     , ( ( 0x9D, "SWAP14", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 15th stack items" ) )
     , ( ( 0x9E, "SWAP15", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 16th stack items" ) )
     , ( ( 0x9F, "SWAP16", 3 ), ( "[a,...,b]", "[b,...,a]", "Exchange 1st and 17th stack items" ) )
+    , ( ( 0xA0, "LOG0", 375 ), ( "[offset,size]", "", "Append log record with no topics" ) )
+    , ( ( 0xA1, "LOG1", 750 ), ( "[offset,size,topic]", "", "Append log record with one topic" ) )
+    , ( ( 0xA2, "LOG2", 1125 ), ( "[offset,size,topic1,topic2]", "", "Append log record with two topics" ) )
+    , ( ( 0xA3, "LOG3", 1500 ), ( "[offset,size,topic1,topic2,topic3]", "", "Append log record with three topics" ) )
+    , ( ( 0xA4, "LOG4", 1875 ), ( "[offset,size,topic1,topic2,topic3,topic4]", "", "Append log record with four topics" ) )
+    , ( ( 0xF0, "CREATE", 32000 ), ( "[value,offset,size]", "address", "Create a new account with associated code" ) )
+    , ( ( 0xF1, "CALL", 100 ), ( "[gas,address,value,argsOffset,argsSize,retOffset,retSize]", "success", "Message-call into an account" ) )
+    , ( ( 0xF2, "CALLCODE", 100 ), ( "gas,address,value,argsOffset,argsSize,retOffset,retSize]", "success", "Message-call into this account with alternative account’s code" ) )
+    , ( ( 0xF3, "RETURN", 0 ), ( "[offset,size]", "", "Halt execution returning output data" ) )
+    , ( ( 0xF4, "DELEGATECALL", 100 ), ( "[gas,address,argsOffset,argsSize,retOffset,retSize]", "success", "Message-call into this account with an alternative account’s code, but persisting the current values for sender and value" ) )
+    , ( ( 0xF5, "CREATE2", 32000 ), ( "[value,offset,size,salt,address]", "", "Create a new account with associated code at a predictable address" ) )
+    , ( ( 0xFA, "STATICCALL", 100 ), ( "[gas,address,argsOffset,argsSize,retOffset,retSize]", "success", "Static message-call into an account" ) )
+    , ( ( 0xFD, "REVERT", 0 ), ( "[offset,size]", "", "Halt execution reverting state changes but returning data and remaining gas" ) )
+    , ( ( 0xFE, "INVALID", 0 ), ( "", "", "Designated invalid instruction" ) )
+    , ( ( 0xFF, "SELFDESTRUCT", 5000 ), ( "[address]", "", "Halt execution and register account for later deletion or send all Ether to address (post-Cancun)" ) )
     ]
-
-
-
-{-
-   a0
-   LOG0
-   375
-   offset
-   size
-   Append log record with no topics
-   a1
-   LOG1
-   750
-   offset
-   size
-   topic
-   Append log record with one topic
-   a2
-   LOG2
-   1125
-   offset
-   size
-   topic1
-   topic2
-   Append log record with two topics
-   a3
-   LOG3
-   1500
-   offset
-   size
-   topic1
-   topic2
-   topic3
-   Append log record with three topics
-   a4
-   LOG4
-   1875
-   offset
-   size
-   topic1
-   topic2
-   topic3
-   topic4
-   Append log record with four topics
-   f0
-   CREATE
-   32000
-   value
-   offset
-   size
-   address
-   Create a new account with associated code
-   f1
-   CALL
-   100
-   gas
-   address
-   value
-   argsOffset
-   argsSize
-   retOffset
-   retSize
-   success
-   Message-call into an account
-   f2
-   CALLCODE
-   100
-   gas
-   address
-   value
-   argsOffset
-   argsSize
-   retOffset
-   retSize
-   success
-   Message-call into this account with alternative account’s code
-   f3
-   RETURN
-   0
-   offset
-   size
-   Halt execution returning output data
-   f4
-   DELEGATECALL
-   100
-   gas
-   address
-   argsOffset
-   argsSize
-   retOffset
-   retSize
-   success
-   Message-call into this account with an alternative account’s code, but persisting the current values for sender and value
-   f5
-   CREATE2
-   32000
-   value
-   offset
-   size
-   salt
-   address
-   Create a new account with associated code at a predictable address
-   fa
-   STATICCALL
-   100
-   gas
-   address
-   argsOffset
-   argsSize
-   retOffset
-   retSize
-   success
-   Static message-call into an account
-   fd
-   REVERT
-   0
-   offset
-   size
-   Halt execution reverting state changes but returning data and remaining gas
-   fe
-   INVALID
-   NaN
-   Designated invalid instruction
-   ff
-   SELFDESTRUCT
-   5000
-   address
-   Halt execution and register account for later deletion or send all Ether to address (post-Cancun)
--}
-
-
-foo =
-    1
