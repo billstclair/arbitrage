@@ -10,9 +10,9 @@
 ----------------------------------------------------------------------
 
 
-module Eth.Opcodes exposing (opcodes)
+module Eth.Opcodes exposing (jsonOpcodes, opcodes)
 
-import Eth.Types exposing (Opcode)
+import Eth.Types exposing (JsonOpcode, Opcode)
 
 
 opcodePairToOpcode : ( ( Int, String, Int ), ( String, String, String ) ) -> Opcode
@@ -182,4 +182,30 @@ opcodesList =
     , ( ( 0xFD, "REVERT", 0 ), ( "[offset,size]", "", "Halt execution reverting state changes but returning data and remaining gas" ) )
     , ( ( 0xFE, "INVALID", 0 ), ( "", "", "Designated invalid instruction" ) )
     , ( ( 0xFF, "SELFDESTRUCT", 5000 ), ( "[address]", "", "Halt execution and register account for later deletion or send all Ether to address (post-Cancun)" ) )
+    ]
+
+
+
+-- From https://ethereum-json-rpc.com
+-- Sent over the wire with an "id" property to cloudflare-eth.com
+-- That is sent back, along with "jsonrpc" and "result", both strings.
+
+
+jsonOpcodes : List JsonOpcode
+jsonOpcodes =
+    [ { jsonrpc = "2.0"
+      , method = "eth_chainid"
+      , name = "CHAINID"
+      , params = []
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_blockNumber"
+      , name = "NUMBER"
+      , params = []
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_gasPrice"
+      , name = "GASPRICE"
+      , params = []
+      }
     ]

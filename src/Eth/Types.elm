@@ -10,7 +10,7 @@
 ----------------------------------------------------------------------
 
 
-module Eth.Types exposing (Opcode)
+module Eth.Types exposing (JsonOpcode, Opcode)
 
 
 type alias Opcode =
@@ -20,4 +20,12 @@ type alias Opcode =
     , input : String
     , output : String
     , description : String
+    }
+
+
+type alias JsonOpcode =
+    { jsonrpc : String
+    , method : String
+    , name : String
+    , params : List Int
     }
