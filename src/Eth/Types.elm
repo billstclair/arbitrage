@@ -28,4 +28,5 @@ type alias JsonOpcode =
     , method : String
     , name : String
     , params : List Int
+    , description : String
     }

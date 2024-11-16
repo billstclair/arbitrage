@@ -197,15 +197,66 @@ jsonOpcodes =
       , method = "eth_chainid"
       , name = "CHAINID"
       , params = []
+      , description = "Returns the chain ID of the current network."
       }
     , { jsonrpc = "2.0"
       , method = "eth_blockNumber"
       , name = "NUMBER"
       , params = []
+      , description = "Returns the number of most recent block."
       }
     , { jsonrpc = "2.0"
       , method = "eth_gasPrice"
       , name = "GASPRICE"
       , params = []
+      , description = "Returns the current price per gas in wei."
       }
     ]
+
+
+{-| Frob
+eth\_maxPriorityFeePerGas
+
+[]
+"Returns the current maxPriorityFeePerGas per gas in wei."
+eth\_blobBaseFee
+BLOBBASEFEE
+[]
+"Returns the base fee per blob gas in wei."
+eth\_feeHistory
+
+[block count,newest block,[reward percentiles]]
+"Returns transaction base fee per gas and effective priority fee per gas for the requested/supported block range."
+eth\_getBalance
+GETBALANCE
+[account,block]
+"Returns the current price per gas in wei."
+eth\_getCode
+
+[contract,block]
+"Returns code at a given address."
+eth\_getStorageAt
+
+[contract,slot,block]
+"Returns the value from a storage position at a given address."
+eth\_call
+CALL
+[ { "nonce": int,
+"type": int, -- Transaction type
+"from": add​ress, -- Source of the transaction call. Useful to impersonate another account.
+"to": add​ress, -- Target contract
+"gas": int, -- Gas limit
+"value": int,
+"data": bytes, -- Transaction call input
+"gas price": int, -- The gas price willing to be paid by the sender in wei
+"max fee per gas": int, -- The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei
+"max priority fee per gas": int, -- Maximum fee per gas the sender is willing to pay to miners in wei
+"max fee per blob gas": int, -- The maximum total fee per gas the sender is willing to pay for blob gas in wei
+},
+block
+]
+"Executes a new message call immediately without creating a transaction on the block chain."
+
+-}
+foo =
+    1
