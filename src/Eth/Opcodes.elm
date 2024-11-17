@@ -12,7 +12,7 @@
 
 module Eth.Opcodes exposing (jsonOpcodes, opcodes)
 
-import Eth.Types exposing (JsonOpcode, Opcode)
+import Eth.Types exposing (Address, JsonOpcode, Opcode, Param(..))
 
 
 opcodePairToOpcode : ( ( Int, String, Int ), ( String, String, String ) ) -> Opcode
@@ -241,18 +241,7 @@ eth\_getStorageAt
 "Returns the value from a storage position at a given address."
 eth\_call
 CALL
-[ { "nonce": int,
-"type": int, -- Transaction type
-"from": add​ress, -- Source of the transaction call. Useful to impersonate another account.
-"to": add​ress, -- Target contract
-"gas": int, -- Gas limit
-"value": int,
-"data": bytes, -- Transaction call input
-"gas price": int, -- The gas price willing to be paid by the sender in wei
-"max fee per gas": int, -- The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei
-"max priority fee per gas": int, -- Maximum fee per gas the sender is willing to pay to miners in wei
-"max fee per blob gas": int, -- The maximum total fee per gas the sender is willing to pay for blob gas in wei
-},
+[ Transaction,
 block
 ]
 "Executes a new message call immediately without creating a transaction on the block chain."
