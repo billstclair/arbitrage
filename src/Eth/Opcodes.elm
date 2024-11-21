@@ -211,41 +211,46 @@ jsonOpcodes =
       , params = []
       , description = "Returns the current price per gas in wei."
       }
+    , { jsonrpc = "2.0"
+      , method = "eth_maxPriorityFeePerGas"
+      , name = "MAXGASFREE"
+      , params = []
+      , description = "Returns the current maxPriorityFeePerGas per gas in wei."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_blobBaseFee"
+      , name = "BLOBBASEFEE"
+      , params = []
+      , description = "Returns the base fee per blob gas in wei."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_feeHistory"
+      , name = "FEEHISTORY"
+      , params = []
+      , description = "Returns transaction base fee per gas and effective priority fee per gas for the requested/supported block range."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_getBalance"
+      , name = "GETBALANCE"
+      , params = []
+      , description = "Returns the current price per gas in wei."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_getCode"
+      , name = "GETCODE"
+      , params = []
+      , description = "Returns code at a given address."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_getStorageAt"
+      , name = "GETSTORAGEAT"
+      , params = []
+      , description = "Returns the value from a storage position at a given address."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_call"
+      , name = "CALL"
+      , params = []
+      , description = "Executes a new message call immediately without creating a transaction on the block chain."
+      }
     ]
-
-
-{-| Frob
-eth\_maxPriorityFeePerGas
-
-[]
-"Returns the current maxPriorityFeePerGas per gas in wei."
-eth\_blobBaseFee
-BLOBBASEFEE
-[]
-"Returns the base fee per blob gas in wei."
-eth\_feeHistory
-
-[block count,newest block,[reward percentiles]]
-"Returns transaction base fee per gas and effective priority fee per gas for the requested/supported block range."
-eth\_getBalance
-GETBALANCE
-[account,block]
-"Returns the current price per gas in wei."
-eth\_getCode
-
-[contract,block]
-"Returns code at a given address."
-eth\_getStorageAt
-
-[contract,slot,block]
-"Returns the value from a storage position at a given address."
-eth\_call
-CALL
-[ Transaction,
-block
-]
-"Executes a new message call immediately without creating a transaction on the block chain."
-
--}
-foo =
-    1

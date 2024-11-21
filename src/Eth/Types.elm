@@ -50,6 +50,28 @@ type Param
         , max_priority_fee_per_gas : Int -- Maximum fee per gas the sender is willing to pay to miners in wei
         , max_fee_per_blob_gas : Int -- The maximum total fee per gas the sender is willing to pay for blob gas in wei
         }
+    | BlockRange
+        { blockCount : Int
+        , newestBlock : Address
+        , rewardPercentiles : List Int
+        }
+    | Account
+        { account : Address
+        , block : Address
+        }
+    | Contract
+        { contract : Address
+        , block : Address
+        }
+    | ContractAddress
+        { contract : Address
+        , slot : Int
+        , block : Address
+        }
+    | Call
+        { transaction : Address
+        , block : Address
+        }
 
 
 type alias Address =
