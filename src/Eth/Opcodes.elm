@@ -226,31 +226,37 @@ jsonOpcodes =
     , { jsonrpc = "2.0"
       , method = "eth_feeHistory"
       , name = "FEEHISTORY"
-      , params = []
+      , params = [] -- [ block count int (as "0x..." string), newest block, reward percentiles array ]
       , description = "Returns transaction base fee per gas and effective priority fee per gas for the requested/supported block range."
       }
     , { jsonrpc = "2.0"
       , method = "eth_getBalance"
       , name = "GETBALANCE"
-      , params = []
+      , params = [] -- [ account address, block ]
       , description = "Returns the current price per gas in wei."
       }
     , { jsonrpc = "2.0"
       , method = "eth_getCode"
       , name = "GETCODE"
-      , params = []
+      , params = [] -- [ contract address, block ]
       , description = "Returns code at a given address."
       }
     , { jsonrpc = "2.0"
       , method = "eth_getStorageAt"
       , name = "GETSTORAGEAT"
-      , params = []
+      , params = [] -- [ contract address, slot bytes32, block ]
       , description = "Returns the value from a storage position at a given address."
       }
     , { jsonrpc = "2.0"
       , method = "eth_call"
       , name = "CALL"
-      , params = []
+      , params = [] -- [ Transaction, block]
       , description = "Executes a new message call immediately without creating a transaction on the block chain."
+      }
+    , { jsonrpc = "2.0"
+      , method = "eth_estimateGas"
+      , name = "ESTIMATEGAS"
+      , params = []
+      , description = "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance."
       }
     ]
