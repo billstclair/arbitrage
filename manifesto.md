@@ -1,4 +1,4 @@
-˘# Manifesto
+# Manifesto
 
 This document outlines my philosphy of webapps.
 
