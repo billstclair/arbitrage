@@ -17,7 +17,7 @@ $ ./bin/build
 
 ## Emacs Lisp code for arbitrage.
 
-From my ~/.emacs file.
+From my ~/.emacs file. Added while writing code for a sports gambling web site that encouraged professional gamblers.
 
 ```
 (defun arbitrage (&rest odds)
