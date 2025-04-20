@@ -16,7 +16,8 @@ $ cd .../arbitrage<br/>
 $ ./bin/build
 
 ## Emacs Lisp code for arbitrage.
-## From my ~/.emacs file.
+
+From my ~/.emacs file.
 
 ```
 (defun arbitrage (&rest odds)
