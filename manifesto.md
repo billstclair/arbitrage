@@ -15,3 +15,6 @@ that.
 Of course, you can't take my word for that. You'll have to either
 watch your network traffic, or rely on the opinion of somebody you
 already trust.
+
+Bill St. Clair<br/>
+7 March, 2025

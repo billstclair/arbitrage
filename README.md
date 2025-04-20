@@ -1,5 +1,8 @@
 [Arbitrage](https://arbitrage.wtf) is an Automated Crypto Arbitrage trading system.
 
+I have abandoned work on this. 
+It's too hard to find pricing info.
+
 For development:
 
 $ cd .../arbitrage<br/>
